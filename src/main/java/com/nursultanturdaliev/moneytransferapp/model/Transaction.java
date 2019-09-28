@@ -13,11 +13,23 @@ public class Transaction {
     @Column(name = "transaction_id", nullable = false)
     private String transactionId;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_user_id", value = ConstraintMode.PROVIDER_DEFAULT))
+    private User user;
+
     public String getTransactionId() {
         return transactionId;
     }
 
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

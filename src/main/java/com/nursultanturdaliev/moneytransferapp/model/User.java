@@ -39,4 +39,12 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 }
