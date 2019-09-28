@@ -19,4 +19,10 @@ public class UserController {
     public User findOne(@PathVariable Long id) {
         return userRepository.findById(id).get();
     }
+
+    @GetMapping("/")
+    public Iterable<User> index()
+    {
+        return  userRepository.findAll();
+    }
 }
