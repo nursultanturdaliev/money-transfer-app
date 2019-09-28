@@ -1,6 +1,7 @@
 package com.nursultanturdaliev.moneytransferapp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,8 +20,10 @@ public class User {
     @Column(length = 50, nullable = false)
     private String firstName;
 
+    public User(){}
+
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonManagedReference
     private List<Transaction> transactions;
 
     public String getFirstName() {
