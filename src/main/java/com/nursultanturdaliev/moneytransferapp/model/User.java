@@ -1,6 +1,7 @@
 package com.nursultanturdaliev.moneytransferapp.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -15,6 +16,9 @@ public class User {
 
     @Column(length = 50, nullable = false)
     private String firstName;
+
+    @OneToMany(mappedBy = "user")
+    private List<Transaction> transactions;
 
     public String getFirstName() {
         return firstName;
