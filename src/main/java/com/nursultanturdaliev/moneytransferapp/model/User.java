@@ -50,4 +50,8 @@ public class User {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+
+    public Long getId() {
+        return id;
+    }
 }
