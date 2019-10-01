@@ -3,16 +3,21 @@ package com.nursultanturdaliev.moneytransferapp;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nursultanturdaliev.moneytransferapp.model.Transaction;
 import com.nursultanturdaliev.moneytransferapp.model.User;
+import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.util.Optional;
+
+@Controller
 @RequestMapping(path = "/api/users")
 public class UserController {
 
@@ -20,22 +25,36 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
+    private TransactionRepository transactionRepository;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     @GetMapping("/{id}")
-    public @ResponseBody
-    User findOne(@PathVariable Long id) {
-        return userRepository.findById(id).get();
+    public ResponseEntity<Object> findOne(@PathVariable Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if(!optionalUser.isPresent()){
+            return new ResponseEntity<>("User Not Found",HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(optionalUser.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity<Iterable<Transaction>> findTransactionsByUserId(@PathVariable Long id)
+    {
+        Iterable<Transaction> transactions = transactionRepository.findByUserId(id);
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public @ResponseBody
-    Iterable<User> index() {
-        return userRepository.findAll();
+    public ResponseEntity<Iterable<User>> index() {
+        return ResponseEntity.ok()
+                             .header("Request-Id", "request-id")
+                             .body(userRepository.findAll());
     }
 
     @PostMapping(value = "/")
-    public User create(@RequestBody User user) {
+    public  User create(@RequestBody User user) {
         userRepository.save(user);
         return user;
     }
@@ -63,5 +82,13 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //http://localhost:8080/api/users/search?firstName=Nursultan
+
+    @GetMapping("/search")
+    public ResponseEntity<Iterable<User>> search(@RequestParam("firstName") String firstName)
+    {
+        return ResponseEntity.ok(userRepository.findByFirstName(firstName));
     }
 }

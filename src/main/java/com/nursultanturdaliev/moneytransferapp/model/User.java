@@ -46,7 +46,7 @@ public class User {
         this.id = id;
     }
 
-    public List<Transaction> getTransactions() {
+    public Iterable<Transaction> getTransactions() {
         return transactions;
     }
 
