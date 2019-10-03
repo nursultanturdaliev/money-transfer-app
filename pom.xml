@@ -56,6 +56,19 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>6.0.4</version>
+				<configuration>
+					<user>root</user>
+					<url>jdbc:mysql://localhost:3307/money-transfer-app</url>
+					<schemas>
+						<schema>money-transfer-app</schema>
+					</schemas>
+					<baselineOnMigrate>false</baselineOnMigrate>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
