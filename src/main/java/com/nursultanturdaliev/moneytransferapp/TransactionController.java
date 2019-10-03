@@ -21,15 +21,11 @@ public class TransactionController {
 
     @GetMapping("/")
     public ResponseEntity<Iterable<Transaction>> findAll() {
-        try {
             Iterable<Transaction> transactions = transactionRepository.findAll();
             if (transactions.iterator().hasNext()) {
                 return ResponseEntity.ok(transactions);
             }
             return ResponseEntity.notFound().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).build();
-        }
     }
 
     @GetMapping("/{id}")
