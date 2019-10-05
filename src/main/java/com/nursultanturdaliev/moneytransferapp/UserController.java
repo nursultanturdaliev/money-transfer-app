@@ -9,12 +9,16 @@ import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -33,15 +37,14 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> findOne(@PathVariable Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        if(!optionalUser.isPresent()){
-            return new ResponseEntity<>("User Not Found",HttpStatus.NOT_FOUND);
+        if (!optionalUser.isPresent()) {
+            return new ResponseEntity<>("User Not Found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(optionalUser.get(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/transactions")
-    public ResponseEntity<Iterable<Transaction>> findTransactionsByUserId(@PathVariable Long id)
-    {
+    public ResponseEntity<Iterable<Transaction>> findTransactionsByUserId(@PathVariable Long id) {
         Iterable<Transaction> transactions = transactionRepository.findByUserId(id);
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
@@ -49,12 +52,12 @@ public class UserController {
     @GetMapping("/")
     public ResponseEntity<Iterable<User>> index() {
         return ResponseEntity.ok()
-                             .header("Request-Id", "request-id")
-                             .body(userRepository.findAll());
+                .header("Request-Id", "request-id")
+                .body(userRepository.findAll());
     }
 
     @PostMapping(value = "/")
-    public  User create(@RequestBody User user) {
+    public User create(@RequestBody User user) {
         userRepository.save(user);
         return user;
     }
@@ -84,11 +87,22 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    //http://localhost:8080/api/users/search?firstName=Nursultan
+//http://localhost:8080/api/users/search?firstName=Nursultan
 
     @GetMapping("/search")
-    public ResponseEntity<Iterable<User>> search(@RequestParam("firstName") String firstName)
-    {
-        return ResponseEntity.ok(userRepository.findByFirstName(firstName));
+    public ResponseEntity<Iterable<User>> search(@RequestParam(required = false, name = "firstName") String firstName,
+                                                 @RequestParam(required = false, name = "lastName") String lastName) {
+        Iterable<User> iterable;
+        if (firstName != null && lastName != null) {
+            iterable = userRepository.findTop10ByFirstNameAndLastName(firstName, lastName);
+        } else if (firstName != null) {
+            iterable = userRepository.findTop1ByFirstName(firstName);
+        } else if (lastName != null) {
+            iterable = userRepository.findTop10ByLastName(lastName);
+        } else {
+            iterable = userRepository.findAllTopTen();
+        }
+
+        return ResponseEntity.ok(iterable);
     }
 }

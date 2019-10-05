@@ -20,6 +20,9 @@ public class User {
     @Column(length = 50, nullable = false)
     private String firstName;
 
+    @Column(length = 50, nullable = true)
+    private String username;
+
     public User(){}
 
     @OneToMany(mappedBy = "user")
@@ -52,5 +55,13 @@ public class User {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
