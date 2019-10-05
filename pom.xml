@@ -62,7 +62,7 @@
 				<version>6.0.4</version>
 				<configuration>
 					<user>root</user>
-					<url>jdbc:mysql://localhost:3307/money-transfer-app</url>
+					<url>jdbc:mysql://localhost:3307/money-transfer-app?serverTimezone=UTC</url>
 					<schemas>
 						<schema>money-transfer-app</schema>
 					</schemas>
