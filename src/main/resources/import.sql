@@ -6,4 +6,5 @@ INSERT INTO transactions (amount, transaction_id, user_id) VALUE (120,'transacti
 
 INSERT INTO currencies (id,name) value (1,'USD');
 INSERT INTO currencies (id,name) value (2,'EUR');
-INSERT INTO currencies (id,name) value (3,'SOM');
+INSERT INTO currencies (id,name) value (3,'KGS');
+INSERT INTO currencies (id,name) value (4,CADasdfasdf'sadfasdf);
