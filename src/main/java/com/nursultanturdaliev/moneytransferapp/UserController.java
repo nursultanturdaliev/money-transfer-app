@@ -45,10 +45,23 @@ public class UserController {
     //http://localhost:8080/api/users/search?firstName=Nursultan
 
     @GetMapping("/search")
-    public Iterable<User> search(@RequestParam String firstName)
+    public Iterable<User> search(@RequestParam(required = false) String firstName,@RequestParam(required = false) String lastName)
     {
-        return userRepository.findByFirstName(firstName);
+        if (firstName != null && lastName != null){
+            return userRepository.findTop10ByFirstNameAndLastName(firstName,lastName);
+        }
+
+        if (firstName == null && lastName != null){
+            return userRepository.findTop10ByLastName(lastName);
+        }
+        if (firstName != null && lastName == null){
+            return userRepository.findTop10ByFirstName(firstName);
+        }
+
+        return userRepository.fetchTop10();
     }
+
+
 
     @PostMapping("/")
     public User create(@RequestBody User user) {
