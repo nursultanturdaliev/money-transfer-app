@@ -38,7 +38,7 @@ public class UserRepositoryTest {
 
 
         //Assertions
-        List<User> userList= new ArrayList<>();
+        List<User> userList = new ArrayList<>();
 
         users.forEach(userList::add);
 
@@ -55,7 +55,7 @@ public class UserRepositoryTest {
     public void testFindTop10ByFirstNameAndLastName() {
         //Preparation
         User mockUser = null;
-        for(int i = 0; i < 15; i++){
+        for (int i = 0; i < 15; i++) {
             mockUser = new User();
             mockUser.setFirstName("Chyngyz");
             mockUser.setLastName("Aitmatov");
@@ -67,12 +67,11 @@ public class UserRepositoryTest {
         mockUser2.setLastName("Lou");
         this.entityManager.persist(mockUser2);
         Iterable<User> users = this.userRepository.findTop10ByFirstNameAndLastName("Chyngyz", "Aitmatov");
-        List<User> userList= new ArrayList<>();
+        List<User> userList = new ArrayList<>();
         users.forEach(userList::add);
         assertThat(userList).isNotEmpty();
         assertThat(userList).doesNotContain(mockUser);
-       assertThat(userList.size()).isEqualTo(10);
-
+        assertThat(userList.size()).isEqualTo(10);
 
 
     }

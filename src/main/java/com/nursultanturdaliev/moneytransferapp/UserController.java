@@ -7,6 +7,7 @@ import com.nursultanturdaliev.moneytransferapp.model.Transaction;
 import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
+import com.nursultanturdaliev.moneytransferapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +31,9 @@ public class UserController {
 
     @Autowired
     private TransactionRepository transactionRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -57,13 +61,13 @@ public class UserController {
     }
 
     @PostMapping(value = "/")
-    public User create(@RequestBody User user) {
-        userRepository.save(user);
-        return user;
+    public ResponseEntity<User> create(@RequestBody User user) {
+        User savedUser = userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     @PutMapping(value = "/{id}")
-    public User update(@RequestBody User user, @PathVariable Long id) {
+    public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
 
         User savedUser = userRepository.findById(id).get();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
@@ -74,7 +78,7 @@ public class UserController {
         }
 
         userRepository.save(savedUser);
-        return savedUser;
+        return ResponseEntity.ok(savedUser);
     }
 
     @DeleteMapping(value = "/{id}")
