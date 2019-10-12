@@ -44,12 +44,6 @@ public class UsersApiTest {
         assertThat(firstUser).hasFieldOrPropertyWithValue("lastName", "Turdaliev");
     }
 
-
-
-
-
-
-
     @Test
     public void testFetchUserEndpointWithNonExistentUser() {
         ResponseEntity<String> responseEntity = this.restTemplate.
@@ -57,11 +51,6 @@ public class UsersApiTest {
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
-
-
-
-
-
 
     @Test
     public void testCreateUserEndpoint() throws URISyntaxException {

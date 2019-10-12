@@ -53,6 +53,21 @@ public class UserController {
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/transactions/")
+    public ResponseEntity<Transaction> create(@RequestBody Transaction transaction, @PathVariable Long id) {
+
+        Optional<User> userOptional = userRepository.findById(id);
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        transaction.setUser(userOptional.get());
+
+        Transaction savedTransaction = this.transactionRepository.save(transaction);
+
+        return ResponseEntity.ok(savedTransaction);
+    }
+
     @GetMapping("/")
     public ResponseEntity<Iterable<User>> index() {
         return ResponseEntity.ok()

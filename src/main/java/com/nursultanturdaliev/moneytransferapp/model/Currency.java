@@ -36,7 +36,7 @@ public class Currency {
     }
 
     @OneToMany(mappedBy = "currency")
-    @JsonBackReference
+    @JsonIgnore
     private List<Transaction> transaction;
 
     public String getName() {
