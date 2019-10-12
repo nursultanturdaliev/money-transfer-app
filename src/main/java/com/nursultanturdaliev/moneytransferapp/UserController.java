@@ -58,14 +58,14 @@ public class UserController {
 
         Optional<User> userOptional = userRepository.findById(id);
         if (!userOptional.isPresent()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404).body(transaction);
         }
 
         transaction.setUser(userOptional.get());
 
         Transaction savedTransaction = this.transactionRepository.save(transaction);
 
-        return ResponseEntity.ok(savedTransaction);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedTransaction);
     }
 
     @GetMapping("/")
