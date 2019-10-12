@@ -19,22 +19,28 @@ import java.util.NoSuchElementException;
 @RequestMapping(path = "/api/exception")
 public class ExceptionController {
 
-    @ExceptionHandler({NoSuchElementException.class, JsonMappingException.class})
-    public ModelAndView handleException(Exception exception) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("custom-error");
-        modelAndView.addObject("message", exception.getMessage());
-        return modelAndView;
-    }
-
-    @GetMapping("/")
-    public ResponseEntity<String> fetchAll() {
-        throw new NoSuchElementException();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<String> fetchOne(@PathVariable Long id) {
-
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exception Not Found");
-    }
+//    @ExceptionHandler({NoSuchElementException.class, JsonMappingException.class})
+//    public ModelAndView handleException(Exception exception) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("custom-error");
+//        modelAndView.addObject("message", exception.getMessage());
+//        return modelAndView;
+//    }
+//
+//    @GetMapping("/")
+//    public ResponseEntity<String> fetchAll() {
+//
+//        throw new NoSuchElementException();
+//    }
+//
+//    @GetMapping("/{id}")
+//    public ResponseEntity<String> fetchOne(@PathVariable Long id) {
+//
+//        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exception Not Found");
+//    }
+//
+//    @GetMapping("/search")
+//    public ResponseEntity<String> search() {
+//        throw new RecordConflictException("Exception Record Conflict Exception");
+//    }
 }

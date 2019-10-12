@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
@@ -75,5 +76,35 @@ public class UsersApiTest {
         assertThat(userResponseEntity.getBody()).hasFieldOrPropertyWithValue("firstName", "Azamat");
         assertThat(userResponseEntity.getBody()).hasFieldOrPropertyWithValue("lastName", "Baimatov");
     }
+
+    @Test
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:delete-users.sql")
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:testRunSpecificMethodRelatedSql.sql")
+    public void testUserSearch() throws URISyntaxException {
+        URI url = new URI(HTTP_LOCALHOST + port + "/api/users/search");
+        ResponseEntity<User[]> responseEntity = this.restTemplate.
+                getForEntity(url, User[].class);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isNotEmpty();
+        assertThat(responseEntity.getBody()[0]).hasFieldOrPropertyWithValue("firstName", "Azamat");
+        assertThat(responseEntity.getBody()[0]).hasFieldOrPropertyWithValue("lastName", "Baimatov");
+
+
+
+    }
+
+    @Test
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:delete-users.sql")
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:testRunSpecificMethodRelatedSql.sql")
+    public void testUserSearchNonExistentUserName() throws URISyntaxException {
+        URI url = new URI(HTTP_LOCALHOST + port + "/api/users/search?firstName=Michael&lastName=Jackson");
+        ResponseEntity<User[]> responseEntity = this.restTemplate.
+                getForEntity(url, User[].class);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isEmpty();
+    }
+
 
 }

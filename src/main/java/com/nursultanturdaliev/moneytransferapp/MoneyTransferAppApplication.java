@@ -9,8 +9,10 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConf
 //@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 public class MoneyTransferAppApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MoneyTransferAppApplication.class, args);
-	}
+    public static final String RECORD_CONFLICT = "RECORD_CONFLICT";
+
+    public static void main(String[] args) {
+        SpringApplication.run(MoneyTransferAppApplication.class, args);
+    }
 
 }

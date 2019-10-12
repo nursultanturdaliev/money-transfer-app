@@ -1,6 +1,7 @@
 package com.nursultanturdaliev.moneytransferapp;
 
-import org.springframework.stereotype.Component;
+import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("HomeService")
