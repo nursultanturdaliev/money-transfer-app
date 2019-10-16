@@ -11,6 +11,6 @@ public class ResponseStatusExceptionResolverController {
 
     @GetMapping("/")
     public ResponseEntity<Object> fetchAll() throws UserResourceNotFoundException {
-        throw new UserResourceNotFoundException();
+        throw new UserResourceNotFoundException("this is custom error message");
     }
 }

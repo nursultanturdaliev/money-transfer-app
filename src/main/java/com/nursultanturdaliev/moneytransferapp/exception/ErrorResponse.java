@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class ErrorResponse
 {
+    private String message;
+    private ArrayList<String> details;
+
     public ErrorResponse(String message, ArrayList<String> details) {
         super();
         this.message = message;
         this.details = details;
     }
-
-    private String message;
-    private ArrayList<String> details;
 
     public String getMessage() {
         return message;

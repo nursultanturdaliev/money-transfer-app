@@ -8,4 +8,8 @@ public class UserResourceNotFoundException extends Exception {
     public UserResourceNotFoundException() {
         super();
     }
+
+    public UserResourceNotFoundException(String message){
+        super(message);
+    }
 }

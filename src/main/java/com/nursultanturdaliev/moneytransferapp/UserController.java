@@ -10,17 +10,14 @@ import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
 import com.nursultanturdaliev.moneytransferapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import javax.validation.ConstraintViolationException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.*;
 
 @Controller
 @RequestMapping(path = "/api/users")
@@ -40,11 +37,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> findOne(@PathVariable Long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (!optionalUser.isPresent()) {
-            return new ResponseEntity<>("User Not Found", HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(optionalUser.get(), HttpStatus.OK);
+        User optionalUser = userRepository.findById(id).get();
+        return new ResponseEntity<>(optionalUser, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/transactions")

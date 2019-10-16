@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConf
 @SpringBootApplication
 public class MoneyTransferAppApplication {
 
-    public static final String RECORD_CONFLICT = "RECORD_CONFLICT_CONSTANT";
+    public static final String   RECORD_CONFLICT = "RECORD_CONFLICT_CONSTANT";
 
     public static void main(String[] args) {
         SpringApplication.run(MoneyTransferAppApplication.class, args);
