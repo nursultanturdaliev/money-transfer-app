@@ -13,8 +13,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class MoneyTransferAppApplication {
 
-    public static final String RECORD_CONFLICT = "RECORD_CONFLICT_CONSTANT";
-
     public static void main(String[] args) {
         SpringApplication.run(MoneyTransferAppApplication.class, args);
     }
