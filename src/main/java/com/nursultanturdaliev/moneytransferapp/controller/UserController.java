@@ -1,4 +1,4 @@
-package com.nursultanturdaliev.moneytransferapp;
+package com.nursultanturdaliev.moneytransferapp.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -17,8 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ConstraintViolationException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 @Controller
@@ -105,7 +103,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//http://localhost:8080/api/users/search?firstName=Nursultan
+    //http://localhost:8080/api/users/search?firstName=Nursultan
 
     @GetMapping("/search")
     public ResponseEntity<Iterable<User>> search(@RequestParam(required = false, name = "firstName") String firstName,

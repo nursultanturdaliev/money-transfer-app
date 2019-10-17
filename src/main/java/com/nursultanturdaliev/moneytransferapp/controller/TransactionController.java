@@ -1,4 +1,4 @@
-package com.nursultanturdaliev.moneytransferapp;
+package com.nursultanturdaliev.moneytransferapp.controller;
 
 import com.nursultanturdaliev.moneytransferapp.model.Transaction;
 import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;

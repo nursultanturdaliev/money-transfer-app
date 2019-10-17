@@ -22,7 +22,8 @@ public class MoneyTransferAppApplication {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
+                .apis(RequestHandlerSelectors.
+                        basePackage("com.nursultanturdaliev.moneytransferapp.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
