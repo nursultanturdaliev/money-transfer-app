@@ -9,6 +9,7 @@ import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
 import com.nursultanturdaliev.moneytransferapp.services.UserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -37,13 +38,15 @@ public class UserController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @ApiOperation(value = "find user by id")
     @GetMapping("/{id}")
-    public ResponseEntity<Object> findOne(@PathVariable Long id) {
-        User optionalUser = userRepository.findById(id).get();
-        return new ResponseEntity<>(optionalUser, HttpStatus.OK);
+    public ResponseEntity<User> findOne(@PathVariable Long id) {
+        User user = userRepository.findById(id).get();
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/transactions")
+    @ApiOperation(value = "find transactions by user id")
     public ResponseEntity<Iterable<Transaction>> findTransactionsByUserId(@PathVariable Long id) {
         Iterable<Transaction> transactions = transactionRepository.findByUserId(id);
         return new ResponseEntity<>(transactions, HttpStatus.OK);
