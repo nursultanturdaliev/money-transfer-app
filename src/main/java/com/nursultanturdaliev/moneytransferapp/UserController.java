@@ -8,6 +8,7 @@ import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
 import com.nursultanturdaliev.moneytransferapp.services.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping(path = "/api/users")
+@Api
 public class UserController {
 
     @Autowired
