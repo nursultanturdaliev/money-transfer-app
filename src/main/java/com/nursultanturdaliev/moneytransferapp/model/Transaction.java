@@ -35,6 +35,11 @@ public class Transaction {
     @UpdateTimestamp
     private Date updatedAt;
 
+    public Transaction()
+    {
+
+    }
+
     public Transaction(Long amount, String transactionId){
         this.amount = amount;
         this.transactionId = transactionId;

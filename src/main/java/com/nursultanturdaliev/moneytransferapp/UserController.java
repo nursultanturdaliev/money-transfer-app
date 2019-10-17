@@ -52,7 +52,7 @@ public class UserController {
 
         Optional<User> userOptional = userRepository.findById(id);
         if (!userOptional.isPresent()) {
-            return ResponseEntity.status(404).body(transaction);
+            return ResponseEntity.status(404).build();
         }
 
         transaction.setUser(userOptional.get());
