@@ -64,7 +64,7 @@ public class UserController {
 
     //provide expression-based access control
     @GetMapping("/")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public ResponseEntity<Iterable<User>> index() {
         return ResponseEntity.ok()
                 .header("Request-Id", "request-id")
