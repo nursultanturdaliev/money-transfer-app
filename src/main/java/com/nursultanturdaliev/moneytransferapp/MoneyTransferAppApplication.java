@@ -34,12 +34,65 @@ public class MoneyTransferAppApplication {
                                 .message("successful request")
                                 .build(),
                         new ResponseMessageBuilder()
+                                .code(400)
+                                .message("bad request")
+                                .build(),
+                        new ResponseMessageBuilder()
                                 .code(404)
                                 .message("resource not found")
+                                .build(),
+                        new ResponseMessageBuilder()
+                                .code(500)
+                                .message("internal server error")
                                 .build()))
+                .globalResponseMessage(RequestMethod.POST,
+                newArrayList(new ResponseMessageBuilder()
+                                .code(201)
+                                .message("user created")
+                                .build(),
+                        new ResponseMessageBuilder()
+                                .code(400)
+                                .message("bad request")
+                                .build(),
+                        new ResponseMessageBuilder()
+                                .code(405)
+                                .message("method not allowed")
+                                .build(),
+                        new ResponseMessageBuilder()
+                                .code(500)
+                                .message("internal server error")
+                                .build()))
+                .globalResponseMessage(RequestMethod.DELETE,
+                newArrayList(
+                        new ResponseMessageBuilder()
+                                .code(204)
+                                .message("no content")
+                                .build(),
+                        new ResponseMessageBuilder()
+                                .code(404)
+                                .message("resource not found")
+                                .build(),
+                        new ResponseMessageBuilder()
+                                .code(500)
+                                .message("internal server error")
+                                .build()))
+                .globalResponseMessage(RequestMethod.PUT,
+                        newArrayList(
+                                new ResponseMessageBuilder()
+                                        .code(400)
+                                        .message("bad request")
+                                        .build(),
+                                new ResponseMessageBuilder()
+                                        .code(404)
+                                        .message("resource not found")
+                                        .build(),
+                                new ResponseMessageBuilder()
+                                        .code(500)
+                                        .message("internal server error")
+                                        .build()))
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/api/users/*"))
+                .paths(PathSelectors.ant("/api/**"))
                 .build()
                 .apiInfo(apiInfo());
     }

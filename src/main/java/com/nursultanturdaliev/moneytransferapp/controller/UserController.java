@@ -36,7 +36,7 @@ public class UserController {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @ApiOperation(value = "find user by id")
+    @ApiOperation(value = "find one user by id")
     @GetMapping("/{id}")
     public ResponseEntity<User> findOne(@PathVariable Long id) {
         User user = userRepository.findById(id).get();
@@ -53,12 +53,9 @@ public class UserController {
     @PostMapping("/{id}/transactions/")
     public ResponseEntity<Transaction> create(@RequestBody Transaction transaction, @PathVariable Long id) {
 
-        Optional<User> userOptional = userRepository.findById(id);
-        if (!userOptional.isPresent()) {
-            return ResponseEntity.status(404).build();
-        }
+        User user = userRepository.findById(id).get();
 
-        transaction.setUser(userOptional.get());
+        transaction.setUser(user);
 
         Transaction savedTransaction = this.transactionRepository.save(transaction);
 
@@ -73,34 +70,27 @@ public class UserController {
     }
 
     @PostMapping(value = "/")
+    @ApiOperation(value = "create user")
     public ResponseEntity<User> create(@RequestBody User user) {
         User savedUser = userRepository.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
+    public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) throws JsonMappingException {
 
         User savedUser = userRepository.findById(id).get();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        try {
-            savedUser = objectMapper.updateValue(savedUser, user);
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        }
 
+        savedUser = objectMapper.updateValue(savedUser, user);
         userRepository.save(savedUser);
         return ResponseEntity.ok(savedUser);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
-        try {
             userRepository.deleteById(id);
-        } catch (EmptyResultDataAccessException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     //http://localhost:8080/api/users/search?firstName=Nursultan
