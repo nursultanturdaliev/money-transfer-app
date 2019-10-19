@@ -1,5 +1,6 @@
 package com.nursultanturdaliev.moneytransferapp.controller;
 
+import com.nursultanturdaliev.moneytransferapp.annotation.IsSuperAdmin;
 import com.nursultanturdaliev.moneytransferapp.model.Transaction;
 import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class TransactionController {
     private TransactionRepository transactionRepository;
 
     @GetMapping("/")
+    @IsSuperAdmin
     public ResponseEntity<Iterable<Transaction>> findAll() {
             Iterable<Transaction> transactions = transactionRepository.findAll();
             if (transactions.iterator().hasNext()) {

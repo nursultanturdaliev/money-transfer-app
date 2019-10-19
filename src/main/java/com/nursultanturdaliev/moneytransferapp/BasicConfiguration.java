@@ -16,7 +16,9 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
                 .inMemoryAuthentication()
                 .withUser("user").password("{bcrypt}$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG").roles("USER")
                 .and()
-                .withUser("admin").password("{noop}password").roles("USER", "ADMIN");
+                .withUser("admin").password("{noop}password").roles("USER", "ADMIN")
+                .and()
+                .withUser("superadmin").password("{noop}password").roles("USER", "ADMIN", "SUPER_ADMIN");
     }
 
     @Override
