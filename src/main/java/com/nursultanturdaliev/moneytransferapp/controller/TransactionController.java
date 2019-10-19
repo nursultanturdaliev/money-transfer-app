@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/api/transactions")
@@ -28,13 +27,12 @@ public class TransactionController {
             return ResponseEntity.notFound().build();
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> findById(@PathVariable Long id) {
-        Optional<Transaction> optionalTransaction = transactionRepository.findById(id);
-        if (!optionalTransaction.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(optionalTransaction.get());
+            Transaction transaction = transactionRepository.findById(id).get();
+            return new ResponseEntity<>(transaction, HttpStatus.OK);
+
     }
 
 }
