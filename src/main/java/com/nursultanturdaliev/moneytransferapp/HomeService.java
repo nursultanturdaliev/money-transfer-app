@@ -1,10 +1,10 @@
 package com.nursultanturdaliev.moneytransferapp;
 
-import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service("HomeService")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class HomeService {
 
     public String welcome()
