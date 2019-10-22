@@ -4,7 +4,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service("HomeService")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class HomeService {
 
     public String welcome()
