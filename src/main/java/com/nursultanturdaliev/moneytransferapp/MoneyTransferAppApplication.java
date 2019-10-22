@@ -2,7 +2,6 @@ package com.nursultanturdaliev.moneytransferapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +20,6 @@ import static com.google.common.collect.Lists.newArrayList;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @EnableSwagger2
-@EnableOAuth2Sso
 public class MoneyTransferAppApplication {
 
     public static void main(String[] args) {
