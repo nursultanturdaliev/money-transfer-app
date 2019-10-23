@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -43,6 +44,9 @@ public class TransactionServiceTest {
         mockTransaction.setTransactionId(transactionDto.getTransactionId());
 
         Currency currency = new Currency();
+        currency.setName(transactionDto.getCurrencyCode());
+
+        mockTransaction.setCurrency(currency);
 
         when(transactionRepository.save(any(Transaction.class))).thenReturn(mockTransaction);
         when(currencyRepository.findOneByName("USD")).thenReturn(currency);
@@ -52,5 +56,7 @@ public class TransactionServiceTest {
 
         assertEquals(transaction.getAmount(), transactionDto.getAmount());
         assertEquals(transaction.getTransactionId(),transactionDto.getTransactionId());
+
+        assertThat(transaction.getCurrency().getName()).isEqualTo(transactionDto.getCurrencyCode());
     }
 }
