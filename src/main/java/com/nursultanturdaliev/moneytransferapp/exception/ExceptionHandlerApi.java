@@ -10,27 +10,29 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.util.NoSuchElementException;
+
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ExceptionHandlerApi {
-    @ExceptionHandler(value = {NoSuchElementException.class,EmptyResultDataAccessException.class})
+    @ExceptionHandler(value = {NoSuchElementException.class, EmptyResultDataAccessException.class})
     public ResponseEntity<Object> handleNoSuchElementException() {
         return new ResponseEntity<>("Resource not Found", HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(value = JsonMappingException.class)
+    @ExceptionHandler(value = {JsonMappingException.class, NullValueException.class})
     public ResponseEntity<Object> inputBadRequest() {
         return new ResponseEntity<>("Bad Request", HttpStatus.BAD_REQUEST);
 
     }
 
-    @ExceptionHandler(value= JDBCConnectionException.class)
+    @ExceptionHandler(value = JDBCConnectionException.class)
     public ResponseEntity<Object> internalError() {
         return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<Object> methodNotAllowed(){
+    public ResponseEntity<Object> methodNotAllowed() {
         return new ResponseEntity<>("Method not Allowed", HttpStatus.METHOD_NOT_ALLOWED);
     }
 }

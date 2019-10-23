@@ -42,15 +42,8 @@ public class TransactionController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Transaction> create(@RequestBody TransactionDto transactionDto) {
-        try {
-            Transaction transaction = transactionService.createTransaction(transactionDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
-
-
-        } catch (NullValueException exception) {
-            return ResponseEntity.badRequest().build();
-        }
-
+    public ResponseEntity<Transaction> create(@RequestBody TransactionDto transactionDto) throws NullValueException {
+        Transaction transaction = transactionService.createTransaction(transactionDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
     }
 }
