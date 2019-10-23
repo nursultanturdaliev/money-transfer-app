@@ -12,13 +12,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class TransactionService {
 
-    @Autowired
-    private
-    TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
 
-    @Autowired
-    private
-    CurrencyRepository currencyRepository;
+    private CurrencyRepository currencyRepository;
+
+    public TransactionService(TransactionRepository transactionRepository, CurrencyRepository currencyRepository) {
+        this.transactionRepository = transactionRepository;
+        this.currencyRepository = currencyRepository;
+    }
 
     public Transaction createTransaction(TransactionDto transactionDto) throws NullValueException {
 
@@ -34,7 +35,7 @@ public class TransactionService {
 
         String currencyName = transactionDto.getCurrencyCode();
         Currency currency = currencyRepository.findOneByName(currencyName);
-        if(currency == null){
+        if (currency == null) {
             throw new NullValueException();
         }
 
