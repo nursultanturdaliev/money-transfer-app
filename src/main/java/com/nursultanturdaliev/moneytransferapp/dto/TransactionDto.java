@@ -10,9 +10,8 @@ public class TransactionDto {
         return transactionId;
     }
 
-
     public String getCurrencyCode() {
-        return currencyCode;
+        return currencyCode == null ? "USD" : currencyCode;
     }
 
     public void setCurrencyCode(String currencyCode) {

@@ -2,6 +2,7 @@ package com.nursultanturdaliev.moneytransferapp.controller;
 
 import com.nursultanturdaliev.moneytransferapp.annotation.IsSuperAdmin;
 import com.nursultanturdaliev.moneytransferapp.dto.TransactionDto;
+import com.nursultanturdaliev.moneytransferapp.exception.NullValueException;
 import com.nursultanturdaliev.moneytransferapp.model.Transaction;
 import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
 import com.nursultanturdaliev.moneytransferapp.services.TransactionService;
@@ -42,8 +43,14 @@ public class TransactionController {
 
     @PostMapping("/")
     public ResponseEntity<Transaction> create(@RequestBody TransactionDto transactionDto) {
-        Transaction transaction = transactionService.createTransaction(transactionDto);
+        try {
+            Transaction transaction = transactionService.createTransaction(transactionDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
+
+        } catch (NullValueException exception) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }
