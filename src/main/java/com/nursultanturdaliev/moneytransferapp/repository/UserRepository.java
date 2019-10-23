@@ -16,8 +16,10 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Iterable<User> findTop10ByFirstNameAndLastName(String firstName, String lastName);
 
-    @Query(nativeQuery = true,value = "SELECT * FROM users limit 1")
+    @Query(nativeQuery = true, value = "SELECT * FROM users limit 1")
     Iterable<User> findAllTopTen();
 
     Iterable<User> findByFirstName(String firstName);
+
+    User findOneByUsername(String username);
 }

@@ -2,7 +2,7 @@ package com.nursultanturdaliev.moneytransferapp.unit;
 
 import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
-import com.nursultanturdaliev.moneytransferapp.services.UserService;
+import com.nursultanturdaliev.moneytransferapp.services.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -14,15 +14,15 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.Mockito.when;
 
 
-public class UserServiceTestCorrectVersion {
+public class UserServiceImplTestCorrectVersion {
 
     private UserRepository userRepository = Mockito.mock(UserRepository.class);
 
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Before
     public void initUserService() {
-        userService = new UserService(userRepository);
+        userServiceImpl = new UserServiceImpl(userRepository);
     }
 
     @Test
@@ -32,6 +32,6 @@ public class UserServiceTestCorrectVersion {
         userList.add(new User("Askar", "Akaev"));
 
         when(userRepository.findAll()).thenReturn(userList);
-        assertThat(userService.fetchAllUsers()).isNotEmpty();
+        assertThat(userServiceImpl.fetchAllUsers()).isNotEmpty();
     }
 }
