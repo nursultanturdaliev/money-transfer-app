@@ -32,27 +32,27 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("userForm", new User());
+        model.addAttribute("user", new User());
 
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String registration(User userForm, Errors errors) {
+    public String registration(@ModelAttribute("user") User user, Errors errors) {
 
         logger.info("Received registration request");
 
-        userValidator.validate(userForm, errors);
+        userValidator.validate(user, errors);
 
         if (errors.hasErrors()) {
             return "registration";
         }
 
-        userService.save(userForm);
+        userService.save(user);
 
-        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+        securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
 
-        return "redirect:/welcome";
+        return "redirect:/";
     }
 
     @GetMapping("/login")
@@ -64,10 +64,5 @@ public class RegistrationController {
             model.addAttribute("message", "You have been logged out successfully.");
 
         return "login";
-    }
-
-    @GetMapping({"/", "/welcome"})
-    public String welcome(Model model) {
-        return "welcome";
     }
 }
