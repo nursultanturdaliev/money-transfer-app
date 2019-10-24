@@ -1,4 +1,4 @@
-insert into users (id, first_name, last_name, username, email, password) values (1, 'Nursultan', 'Turdaliev', 'nursultanturdaliev', 'nursultanturdaliev@gmail.com','{bcrypt}$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG');
+INSERT INTO users (id, `created_at`, `email`, `first_name`, `last_name`, `password`, `updated_at`, `username`) VALUES (1, '2019-10-24 17:55:56', 'turdaliev@gmail.com', 'Nursultan', 'Turdaliev', '$2a$10$ZuhGJnhIGZJ6dmVwPAJJiu1qQOARFImW8cdGzK9UngDedhG8d1zSm', '2019-10-24 17:55:56', 'nursultanturdaliev');
 insert into users (id, first_name, last_name, username, email, password) values (2, 'Nurali', 'Akimov', 'nurali.akimov', 'nurali.akimov@gmail.com','{bcrypt}$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG');
 insert into currencies (id, name) values (1,'USD');
 insert into currencies (id, name) values (2,'CAD');
@@ -12,3 +12,5 @@ insert into transactions (id, transaction_id, user_id,currency_id) values(4,'TRA
 
 
 insert into roles(id, name)  values(1, 'ROLE_USER');
+
+insert into users_roles (users_id, roles_id) values(1,1);
