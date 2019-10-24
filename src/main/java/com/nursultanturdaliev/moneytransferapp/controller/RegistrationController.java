@@ -55,7 +55,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/login")
-    public String login(Model model, String error, String logout) {
+    public String login() {
         return "login";
     }
 }
