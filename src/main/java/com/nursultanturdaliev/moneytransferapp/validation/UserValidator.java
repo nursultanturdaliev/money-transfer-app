@@ -1,4 +1,4 @@
-package com.nursultanturdaliev.moneytransferapp.auth;
+package com.nursultanturdaliev.moneytransferapp.validation;
 
 
 import com.nursultanturdaliev.moneytransferapp.model.User;

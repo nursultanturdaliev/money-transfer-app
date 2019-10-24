@@ -1,4 +1,4 @@
-package com.nursultanturdaliev.moneytransferapp.auth;
+package com.nursultanturdaliev.moneytransferapp.services;
 
 public interface SecurityService {
 

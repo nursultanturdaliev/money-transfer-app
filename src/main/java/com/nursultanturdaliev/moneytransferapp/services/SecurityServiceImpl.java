@@ -1,4 +1,4 @@
-package com.nursultanturdaliev.moneytransferapp.auth;
+package com.nursultanturdaliev.moneytransferapp.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

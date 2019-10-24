@@ -1,7 +1,7 @@
 package com.nursultanturdaliev.moneytransferapp.controller;
 
-import com.nursultanturdaliev.moneytransferapp.auth.SecurityService;
-import com.nursultanturdaliev.moneytransferapp.auth.UserValidator;
+import com.nursultanturdaliev.moneytransferapp.services.SecurityService;
+import com.nursultanturdaliev.moneytransferapp.validation.UserValidator;
 import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.services.UserService;
 

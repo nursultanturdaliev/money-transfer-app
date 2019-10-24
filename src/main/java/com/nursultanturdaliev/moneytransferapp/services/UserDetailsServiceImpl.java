@@ -1,4 +1,4 @@
-package com.nursultanturdaliev.moneytransferapp.auth;
+package com.nursultanturdaliev.moneytransferapp.services;
 
 import com.nursultanturdaliev.moneytransferapp.model.Role;
 import com.nursultanturdaliev.moneytransferapp.model.User;
