@@ -1,15 +1,14 @@
 package com.nursultanturdaliev.moneytransferapp.services;
 
+import com.nursultanturdaliev.moneytransferapp.exception.InvalidTokenException;
 import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.model.VerificationToken;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class VerificationTokenService {
@@ -37,15 +36,14 @@ public class VerificationTokenService {
         sendingMailService.sendVerificationMail(user, verificationToken.getToken());
     }
 
-    public ResponseEntity<String> verifyEmail(String token) {
-        List<VerificationToken> verificationTokens = verificationTokenRepository.findByToken(token);
-        if (verificationTokens.isEmpty()) {
-            return ResponseEntity.badRequest().body("Invalid token.");
+    public void verifyEmail(String token) throws InvalidTokenException, ExpiredTokenException {
+        VerificationToken verificationToken = verificationTokenRepository.findOneByToken(token);
+        if (verificationToken == null) {
+            throw new InvalidTokenException();
         }
 
-        VerificationToken verificationToken = verificationTokens.get(0);
         if (verificationToken.getExpiredDateTime().isBefore(LocalDateTime.now())) {
-            return ResponseEntity.unprocessableEntity().body("Expired token.");
+            throw new ExpiredTokenException();
         }
 
         verificationToken.setConfirmedDateTime(LocalDateTime.now());
@@ -53,6 +51,5 @@ public class VerificationTokenService {
         verificationToken.getUser().setActive(true);
         verificationTokenRepository.save(verificationToken);
 
-        return ResponseEntity.ok("You have successfully verified your email address.");
     }
 }

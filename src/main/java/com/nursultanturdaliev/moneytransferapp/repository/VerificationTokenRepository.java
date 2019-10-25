@@ -7,5 +7,5 @@ import java.util.List;
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, String> {
     VerificationToken findOneByUserEmail(String email);
 
-    List<VerificationToken> findByToken(String token);
+    VerificationToken findOneByToken(String token);
 }

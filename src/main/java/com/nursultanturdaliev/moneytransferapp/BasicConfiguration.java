@@ -28,7 +28,7 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/registration", "/error").permitAll()
+                .antMatchers("/resources/**", "/registration", "/error", "/verify-email").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -1,10 +1,12 @@
 package com.nursultanturdaliev.moneytransferapp.controller;
 
+import com.nursultanturdaliev.moneytransferapp.exception.InvalidTokenException;
+import com.nursultanturdaliev.moneytransferapp.services.ExpiredTokenException;
 import com.nursultanturdaliev.moneytransferapp.services.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -14,8 +16,9 @@ public class EmailController {
     VerificationTokenService verificationTokenService;
 
     @GetMapping("/verify-email")
-    @ResponseBody
-    public String verifyEmail(String code) {
-        return verificationTokenService.verifyEmail(code).getBody();
+    public ResponseEntity<String> verifyEmail(String code) throws ExpiredTokenException, InvalidTokenException {
+        verificationTokenService.verifyEmail(code);
+
+        return ResponseEntity.ok("You have successfully verified your email address.");
     }
 }
