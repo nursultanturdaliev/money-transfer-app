@@ -7,7 +7,7 @@ import com.nursultanturdaliev.moneytransferapp.model.Transaction;
 import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
-import com.nursultanturdaliev.moneytransferapp.services.UserService;
+import com.nursultanturdaliev.moneytransferapp.services.UserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,6 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
 
 @Controller
 @RequestMapping(path = "/api/users")
@@ -32,7 +30,7 @@ public class UserController {
     private TransactionRepository transactionRepository;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Autowired
     private ObjectMapper objectMapper;

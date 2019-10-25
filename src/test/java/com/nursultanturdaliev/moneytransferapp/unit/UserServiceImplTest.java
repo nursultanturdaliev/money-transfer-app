@@ -1,6 +1,6 @@
 package com.nursultanturdaliev.moneytransferapp.unit;
 
-import com.nursultanturdaliev.moneytransferapp.services.UserService;
+import com.nursultanturdaliev.moneytransferapp.services.UserServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +11,13 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class UserServiceTestImprovedVersionOne {
+public class UserServiceImplTest {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Test
     public void testFetchAll() {
-        assertThat(userService.fetchAllUsers()).isNotEmpty();
+        assertThat(userServiceImpl.fetchAllUsers()).isNotEmpty();
     }
 }
