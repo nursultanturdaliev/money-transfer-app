@@ -51,9 +51,9 @@ public class RegistrationController {
             return "registration";
         }
 
-        userService.save(user);
+        User savedUser = userService.save(user);
 
-        verificationTokenService.createVerification(user.getEmail());
+        verificationTokenService.createVerification(savedUser);
 
 //        securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
 

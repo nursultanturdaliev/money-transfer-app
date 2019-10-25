@@ -13,42 +13,31 @@ import java.util.List;
 
 @Service
 public class VerificationTokenService {
+
     private UserRepository userRepository;
     private VerificationTokenRepository verificationTokenRepository;
     private SendingMailService sendingMailService;
 
     @Autowired
-    public VerificationTokenService(UserRepository userRepository, VerificationTokenRepository verificationTokenRepository, SendingMailService sendingMailService){
+    public VerificationTokenService(UserRepository userRepository, VerificationTokenRepository verificationTokenRepository, SendingMailService sendingMailService) {
         this.userRepository = userRepository;
         this.verificationTokenRepository = verificationTokenRepository;
         this.sendingMailService = sendingMailService;
     }
 
-    public void createVerification(String email){
-        List<User> users = userRepository.findByEmail(email);
-        User user;
-        if (users.isEmpty()) {
-            user = new User();
-            user.setEmail(email);
-            userRepository.save(user);
-        } else {
-            user = users.get(0);
-        }
+    public void createVerification(User user) {
 
-        List<VerificationToken> verificationTokens = verificationTokenRepository.findByUserEmail(email);
-        VerificationToken verificationToken;
-        if (verificationTokens.isEmpty()) {
+        VerificationToken verificationToken = verificationTokenRepository.findOneByUserEmail(user.getEmail());
+        if (verificationToken == null) {
             verificationToken = new VerificationToken();
             verificationToken.setUser(user);
             verificationTokenRepository.save(verificationToken);
-        } else {
-            verificationToken = verificationTokens.get(0);
         }
 
-        sendingMailService.sendVerificationMail(email, verificationToken.getToken());
+        sendingMailService.sendVerificationMail(user, verificationToken.getToken());
     }
 
-    public ResponseEntity<String> verifyEmail(String token){
+    public ResponseEntity<String> verifyEmail(String token) {
         List<VerificationToken> verificationTokens = verificationTokenRepository.findByToken(token);
         if (verificationTokens.isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid token.");

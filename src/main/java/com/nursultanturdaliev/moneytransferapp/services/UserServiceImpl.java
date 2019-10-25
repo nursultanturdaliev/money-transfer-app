@@ -1,6 +1,5 @@
 package com.nursultanturdaliev.moneytransferapp.services;
 
-import com.nursultanturdaliev.moneytransferapp.model.Role;
 import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.repository.RoleRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
@@ -32,14 +31,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) {
+    public User save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setFirstName(user.getFirstName());
         user.setLastName(user.getLastName());
         user.setEmail(user.getEmail());
         user.setUsername(user.getUsername());
         user.setRoles(new HashSet<>(roleRepository.findAll()));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override

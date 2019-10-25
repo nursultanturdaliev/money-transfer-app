@@ -1,46 +1,49 @@
 package com.nursultanturdaliev.moneytransferapp.services;
 
+import com.nursultanturdaliev.moneytransferapp.HomeController;
 import com.nursultanturdaliev.moneytransferapp.model.MailProperties;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
+import com.nursultanturdaliev.moneytransferapp.model.User;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Service
 public class SendingMailService {
     private final MailProperties mailProperties;
-    private final Configuration templates;
+
+    private SpringTemplateEngine springTemplateEngine;
+
+    private org.slf4j.Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
-    SendingMailService(MailProperties mailProperties, Configuration templates){
+    SendingMailService(MailProperties mailProperties, SpringTemplateEngine springTemplateEngine) {
         this.mailProperties = mailProperties;
-        this.templates = templates;
+        this.springTemplateEngine = springTemplateEngine;
     }
 
-    public boolean sendVerificationMail(String toEmail, String verificationCode) {
+    void sendVerificationMail(User user, String verificationCode) {
         String subject = "Please verify your email";
         String body = "";
         try {
-            Template t = templates.getTemplate("email-verification.ftl");
-            Map<String, String> map = new HashMap<>();
-            map.put("VERIFICATION_URL", mailProperties.getVerificationapi() + verificationCode);
-            body = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
+
+            Context context = new Context();
+            context.setVariable("verificationURL", mailProperties.getVerificationapi() + verificationCode);
+            context.setVariable("user", user);
+            body = springTemplateEngine.process("email-verification.html", context);
         } catch (Exception ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            logger.error(ex.getMessage(), ex);
         }
-        return sendMail(toEmail, subject, body);
+
+        sendMail(user.getEmail(), subject, body);
     }
 
     private boolean sendMail(String toEmail, String subject, String body) {
@@ -65,7 +68,7 @@ public class SendingMailService {
             transport.sendMessage(msg, msg.getAllRecipients());
             return true;
         } catch (Exception ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            logger.error(ex.getMessage(),ex);
         }
 
         return false;
