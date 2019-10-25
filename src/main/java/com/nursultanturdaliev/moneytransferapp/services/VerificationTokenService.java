@@ -13,13 +13,11 @@ import java.time.LocalDateTime;
 @Service
 public class VerificationTokenService {
 
-    private UserRepository userRepository;
     private VerificationTokenRepository verificationTokenRepository;
     private SendingMailService sendingMailService;
 
     @Autowired
-    public VerificationTokenService(UserRepository userRepository, VerificationTokenRepository verificationTokenRepository, SendingMailService sendingMailService) {
-        this.userRepository = userRepository;
+    public VerificationTokenService(VerificationTokenRepository verificationTokenRepository, SendingMailService sendingMailService) {
         this.verificationTokenRepository = verificationTokenRepository;
         this.sendingMailService = sendingMailService;
     }
