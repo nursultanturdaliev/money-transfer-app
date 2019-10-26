@@ -64,9 +64,17 @@ public class User {
         this.lastName = lastName;
     }
 
+    public List<Receiver> getReceivers() {
+        return receivers;
+    }
+
+    public void setReceivers(List<Receiver> receivers) {
+        this.receivers = receivers;
+    }
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<Transaction> transactions;
+    private List<Receiver> receivers;
 
     public String getFirstName() {
         return firstName;
@@ -86,14 +94,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Iterable<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
     }
 
     public String getUsername() {

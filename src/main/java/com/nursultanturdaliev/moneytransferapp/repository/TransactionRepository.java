@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PostFilter;
 import java.util.List;
 
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
-    Iterable<Transaction> findByUserId(Long id);
+    Iterable<Transaction> findByReceiverUserId(Long id);
 
     @PostFilter("filterObject.transactionId == authentication.name")
     List<Transaction> findAllByAmount(Long amount);

@@ -5,10 +5,16 @@ insert into currencies (id, name) values (2,'CAD');
 insert into currencies (id, name) values (3,'KGS');
 insert into currencies (id, name) values (4,'EUR');
 
-insert into transactions (id, transaction_id, user_id,currency_id) values(1,'TRANSACTION-ONE',1,1);
-insert into transactions (id, transaction_id, user_id,currency_id) values(2,'TRANSACTION-TWO',1,2);
-insert into transactions (id, transaction_id, user_id,currency_id) values(3,'TRANSACTION-THREE',2,3);
-insert into transactions (id, transaction_id, user_id,currency_id) values(4,'TRANSACTION-FOUR',2,4);
+insert into receivers(id, first_name, last_name, phone_number) values ( 1, 'Elon', 'Musk', '7742321321' );
+insert into receivers(id, first_name, last_name, phone_number) values ( 2, 'Almazbek', 'Atambaev', '7743211321' );
+insert into receivers(id, first_name, last_name, phone_number) values ( 3, 'Jack', 'Ma', '7742332121' );
+
+
+insert into transactions (id, transaction_id, currency_id, receiver_id, amount, phone_number) values(1,'TRANSACTION-ONE',1,1,1000, '7742321321');
+insert into transactions (id, transaction_id, currency_id, receiver_id, amount, phone_number) values(2,'TRANSACTION-TWO',1,1, 10, '7742321321');
+insert into transactions (id, transaction_id, currency_id, receiver_id, amount, phone_number) values(3,'TRANSACTION-THREE',2,1,2000, '7742321321');
+insert into transactions (id, transaction_id, currency_id, receiver_id, amount, phone_number) values(4,'TRANSACTION-FOUR',2,1,2000, '7742321321');
+
 
 
 insert into roles(id, name)  values(1, 'ROLE_USER');

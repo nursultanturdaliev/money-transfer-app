@@ -46,7 +46,7 @@ public class UserController {
     @GetMapping("/{id}/transactions")
     @ApiOperation(value = "find transactions by user id")
     public ResponseEntity<Iterable<Transaction>> findTransactionsByUserId(@PathVariable Long id) {
-        Iterable<Transaction> transactions = transactionRepository.findByUserId(id);
+        Iterable<Transaction> transactions = transactionRepository.findByReceiverUserId(id);
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
@@ -54,8 +54,6 @@ public class UserController {
     public ResponseEntity<Transaction> create(@RequestBody Transaction transaction, @PathVariable Long id) {
 
         User user = userRepository.findById(id).get();
-
-        transaction.setUser(user);
 
         Transaction savedTransaction = this.transactionRepository.save(transaction);
 

@@ -1,8 +1,6 @@
 package com.nursultanturdaliev.moneytransferapp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,12 +20,17 @@ public class Transaction {
     @Column(name = "transaction_id", nullable = false)
     private String transactionId;
 
+    @Column(name = "amount", nullable = false)
     private Long amount;
 
+    @Column(name = "phoneNumber", nullable = false)
+    private String phoneNumber;
+
+
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", nullable = true, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_user_id", value = ConstraintMode.PROVIDER_DEFAULT))
+    @JoinColumn(name = "receiver_id", nullable = true, referencedColumnName = "id")
     @JsonIgnore
-    private User user;
+    private Receiver receiver;
 
     @CreationTimestamp
     private Date createdAt;
@@ -74,14 +77,6 @@ public class Transaction {
         this.transactionId = transactionId;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -104,5 +99,21 @@ public class Transaction {
 
     public void setAmount(Long amount) {
         this.amount = amount;
+    }
+
+    public Receiver getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Receiver receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
