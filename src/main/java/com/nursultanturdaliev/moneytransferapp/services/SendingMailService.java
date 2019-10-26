@@ -30,7 +30,7 @@ public class SendingMailService {
         this.springTemplateEngine = springTemplateEngine;
     }
 
-    void sendVerificationMail(User user, String verificationCode) {
+    public void sendVerificationMail(User user, String verificationCode) {
         String subject = "Please verify your email";
         String body = "";
         try {
@@ -39,6 +39,21 @@ public class SendingMailService {
             context.setVariable("verificationURL", mailProperties.getVerificationapi() + verificationCode);
             context.setVariable("user", user);
             body = springTemplateEngine.process("email-verification.html", context);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+
+        sendMail(user.getEmail(), subject, body);
+    }
+
+    public void sendPasswordResetTokenMail(User user, String resetToken) {
+        String subject = "Please reset token";
+        String body = "";
+        try {
+            Context context = new Context();
+            context.setVariable("resetTokenURL", mailProperties.getResetpasswordapi() + resetToken + "&id=" + user.getId());
+            context.setVariable("user", user);
+            body = springTemplateEngine.process("password-reset-token.html", context);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
@@ -68,7 +83,7 @@ public class SendingMailService {
             transport.sendMessage(msg, msg.getAllRecipients());
             return true;
         } catch (Exception ex) {
-            logger.error(ex.getMessage(),ex);
+            logger.error(ex.getMessage(), ex);
         }
 
         return false;
