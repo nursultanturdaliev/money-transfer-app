@@ -1,20 +1,23 @@
 package com.nursultanturdaliev.moneytransferapp.controller;
 
-import com.nursultanturdaliev.moneytransferapp.services.SecurityService;
-import com.nursultanturdaliev.moneytransferapp.services.VerificationTokenService;
+import com.nursultanturdaliev.moneytransferapp.exception.UserNotFoundException;
+import com.nursultanturdaliev.moneytransferapp.response.GenericResponse;
+import com.nursultanturdaliev.moneytransferapp.services.*;
 import com.nursultanturdaliev.moneytransferapp.validation.UserValidator;
 import com.nursultanturdaliev.moneytransferapp.model.User;
-import com.nursultanturdaliev.moneytransferapp.services.UserService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class RegistrationController {
@@ -26,11 +29,20 @@ public class RegistrationController {
     private SecurityService securityService;
 
     @Autowired
+    private PasswordResetTokenService passwordResetTokenService;
+
+    @Autowired
+    private SendingMailService sendingMailService;
+
+    @Autowired
     private UserValidator userValidator;
     private Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     @Autowired
     private VerificationTokenService verificationTokenService;
+
+    @Autowired
+    private MessageSource messageSource;
 
 
     @GetMapping("/registration")
@@ -55,13 +67,28 @@ public class RegistrationController {
 
         verificationTokenService.createVerification(savedUser);
 
-//        securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
-
         return "redirect:/";
     }
 
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @GetMapping("/forgot-password")
+    public String forgotPassword() {
+        return "forgot-password";
+    }
+
+    @RequestMapping(value = "/reset-password",
+            method = RequestMethod.POST)
+    public ResponseEntity<GenericResponse> resetPassword(HttpServletRequest request,
+                                                         @RequestParam("email") String userEmail) throws UserNotFoundException {
+        passwordResetTokenService.createPasswordReset(userEmail);
+
+        GenericResponse genericResponse = new GenericResponse(
+                messageSource.getMessage("message.resetPasswordEmail", null,
+                        request.getLocale()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(genericResponse);
     }
 }

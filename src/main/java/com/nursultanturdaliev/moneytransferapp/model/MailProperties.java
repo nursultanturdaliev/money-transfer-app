@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "mail")
 public class MailProperties {
+
     public static class SMTP {
         String host;
         String port;
@@ -51,6 +52,7 @@ public class MailProperties {
     private String from;
     private String fromName;
     private String verificationapi;
+    private String resetpasswordapi;
 
     public SMTP getSmtp() {
         return smtp;
@@ -82,5 +84,13 @@ public class MailProperties {
 
     public void setVerificationapi(String verificationapi) {
         this.verificationapi = verificationapi;
+    }
+
+    public String getResetpasswordapi() {
+        return resetpasswordapi;
+    }
+
+    public void setResetpasswordapi(String resetpasswordapi) {
+        this.resetpasswordapi = resetpasswordapi;
     }
 }
