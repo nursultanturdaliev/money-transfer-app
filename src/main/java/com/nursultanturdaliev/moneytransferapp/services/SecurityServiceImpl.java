@@ -62,7 +62,7 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public String validatePasswordResetToken(long id, String token) throws ExpiredTokenException, InvalidTokenException {
+    public void validatePasswordResetToken(long id, String token) throws ExpiredTokenException, InvalidTokenException {
         final PasswordResetToken passToken = passwordResetTokenRepository.findOneByToken(token);
         if ((passToken == null) || (passToken.getUser().getId() != id)) {
             throw new InvalidTokenException();
@@ -76,6 +76,5 @@ public class SecurityServiceImpl implements SecurityService {
         final User user = passToken.getUser();
         final Authentication auth = new UsernamePasswordAuthenticationToken(user, null, Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
         SecurityContextHolder.getContext().setAuthentication(auth);
-        return null;
     }
 }

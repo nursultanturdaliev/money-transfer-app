@@ -101,10 +101,8 @@ public class RegistrationController {
     @RequestMapping(value = "/change-password", method = RequestMethod.GET)
     public String changePassword(Model model,
                                  @RequestParam("id") long id, @RequestParam("token") String token) throws ExpiredTokenException, InvalidTokenException {
-        String result = securityService.validatePasswordResetToken(id, token);
-        if (result != null) {
-            return "redirect:/login";
-        }
+        securityService.validatePasswordResetToken(id, token);
+
         return "redirect:/update-password";
     }
 

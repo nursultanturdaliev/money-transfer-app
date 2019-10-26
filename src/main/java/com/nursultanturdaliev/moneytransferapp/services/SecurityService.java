@@ -8,5 +8,5 @@ public interface SecurityService {
 
     public void autoLogin(String username, String password);
 
-    String validatePasswordResetToken(long id, String token) throws ExpiredTokenException, InvalidTokenException;
+    void validatePasswordResetToken(long id, String token) throws ExpiredTokenException, InvalidTokenException;
 }
