@@ -9,4 +9,6 @@ public interface UserService {
     User findOneByUsername(String username);
 
     User findUserByEmail(String userEmail);
+
+    void changeUserPassword(User user, String newPassword);
 }

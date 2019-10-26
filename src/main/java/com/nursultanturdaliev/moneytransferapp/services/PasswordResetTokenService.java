@@ -27,7 +27,7 @@ public class PasswordResetTokenService {
             throw new UserNotFoundException();
         }
 
-        PasswordResetToken passwordResetToken =  create(user);
+        PasswordResetToken passwordResetToken = create(user);
 
         sendingMailService.sendPasswordResetTokenMail(user, passwordResetToken.getToken());
 
@@ -36,7 +36,6 @@ public class PasswordResetTokenService {
     public PasswordResetToken create(User user) {
         PasswordResetToken passwordResetToken = new PasswordResetToken();
         passwordResetToken.setUser(user);
-        passwordResetToken.setToken(UUID.randomUUID().toString());
         return passwordTokenRepository.save(passwordResetToken);
     }
 }

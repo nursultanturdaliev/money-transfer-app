@@ -51,14 +51,14 @@ public class SendingMailService {
         String body = "";
         try {
             Context context = new Context();
-            context.setVariable("resetTokenURL", mailProperties.getResetpasswordapi() + resetToken);
+            context.setVariable("resetTokenURL", mailProperties.getResetpasswordapi() + resetToken + "&id=" + user.getId());
             context.setVariable("user", user);
-            body = springTemplateEngine.process("password-reset-token.html",context);
+            body = springTemplateEngine.process("password-reset-token.html", context);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
 
-        sendMail(user.getEmail(),subject,body);
+        sendMail(user.getEmail(), subject, body);
     }
 
     private boolean sendMail(String toEmail, String subject, String body) {

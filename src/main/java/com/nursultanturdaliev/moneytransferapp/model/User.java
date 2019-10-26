@@ -175,4 +175,8 @@ public class User {
     public void setPasswordResetToken(PasswordResetToken passwordResetToken) {
         this.passwordResetToken = passwordResetToken;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

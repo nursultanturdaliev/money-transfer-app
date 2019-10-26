@@ -1,7 +1,9 @@
 package com.nursultanturdaliev.moneytransferapp.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "password_reset_tokens")
@@ -19,7 +21,15 @@ public class PasswordResetToken {
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
-    private Date expiryDate;
+    private LocalDateTime issuedDateTime;
+
+    private LocalDateTime expiryDate;
+
+    public PasswordResetToken() {
+        this.token = UUID.randomUUID().toString();
+        this.issuedDateTime = LocalDateTime.now();
+        this.expiryDate = this.issuedDateTime.plusDays(1);
+    }
 
     public String getToken() {
         return token;
@@ -45,11 +55,21 @@ public class PasswordResetToken {
         this.token = token;
     }
 
-    public Date getExpiryDate() {
+    public LocalDateTime getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
+    public void setExpiryDate(LocalDateTime expiryDate) {
         this.expiryDate = expiryDate;
+    }
+
+    public LocalDateTime getIssuedDateTime()
+    {
+        return issuedDateTime;
+    }
+
+    public void setIssuedDateTime(LocalDateTime issuedDateTime)
+    {
+        this.issuedDateTime = issuedDateTime;
     }
 }
