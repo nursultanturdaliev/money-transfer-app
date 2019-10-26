@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
+</head>
+<body>
+<div class="container">
+    <p>Hi <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span>, </p>
+
+    <p>Thanks for using Kapusta Money Transfer ! Please confirm your email address by clicking on the link below.</p>
+
+    <p><span th:text="${verificationURL}"></span></p>
+
+    <p>If you did not sign up for a Money Transfer account please disregard this email.</p>
+
+    <p>The Kapusta Money Transfer team,</p>
+</div>
+</body>
+
+</html>

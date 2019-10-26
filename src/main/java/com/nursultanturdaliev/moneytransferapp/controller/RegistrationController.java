@@ -1,6 +1,7 @@
 package com.nursultanturdaliev.moneytransferapp.controller;
 
 import com.nursultanturdaliev.moneytransferapp.services.SecurityService;
+import com.nursultanturdaliev.moneytransferapp.services.VerificationTokenService;
 import com.nursultanturdaliev.moneytransferapp.validation.UserValidator;
 import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.services.UserService;
@@ -28,6 +29,9 @@ public class RegistrationController {
     private UserValidator userValidator;
     private Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
+    @Autowired
+    private VerificationTokenService verificationTokenService;
+
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -47,9 +51,11 @@ public class RegistrationController {
             return "registration";
         }
 
-        userService.save(user);
+        User savedUser = userService.save(user);
 
-        securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
+        verificationTokenService.createVerification(savedUser);
+
+//        securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
 
         return "redirect:/";
     }
