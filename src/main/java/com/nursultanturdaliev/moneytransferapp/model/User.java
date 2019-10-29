@@ -32,12 +32,15 @@ public class User {
     @Column(length = 50, nullable = false)
     private String email;
 
+    @JsonIgnore
     private String password;
 
     @Transient
+    @JsonIgnore
     private String passwordConfirm;
 
     @ManyToMany
+    @JsonIgnore
     private Set<Role> roles;
 
     private Boolean isActive;
@@ -47,6 +50,7 @@ public class User {
     private VerificationToken verificationToken;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private PasswordResetToken passwordResetToken;
 
 
