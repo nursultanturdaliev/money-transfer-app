@@ -7,6 +7,7 @@ import com.nursultanturdaliev.moneytransferapp.model.Receiver;
 import com.nursultanturdaliev.moneytransferapp.model.Transaction;
 import com.nursultanturdaliev.moneytransferapp.repository.ReceiverRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
+import com.nursultanturdaliev.moneytransferapp.services.SendingMailService;
 import com.nursultanturdaliev.moneytransferapp.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,9 @@ public class TransactionController {
 
     @Autowired
     private ReceiverRepository receiverRepository;
+
+    @Autowired
+    private SendingMailService sendingMailService;
 
     @GetMapping("/")
     @IsSuperAdmin
@@ -51,12 +55,23 @@ public class TransactionController {
     @PostMapping("/")
     public ResponseEntity<Transaction> create(@RequestBody TransactionDto transactionDto) throws NullValueException {
 
-        Receiver receiver = new Receiver();
-        receiver.setFirstName(transactionDto.getFirstName());
-        receiver.setLastName(transactionDto.getLastName());
-        receiver.setPhoneNumber(transactionDto.getPhoneNumber());
+        Receiver receiver = receiverRepository.findByFirstNameAndLastName(
+                transactionDto.getFirstName(), transactionDto.getLastName());
+
+        if(receiver != null){
+            receiver.setPhoneNumber(transactionDto.getPhoneNumber());
+        }else{
+            receiver = new Receiver();
+            receiver.setFirstName(transactionDto.getFirstName());
+            receiver.setLastName(transactionDto.getLastName());
+            receiver.setPhoneNumber(transactionDto.getPhoneNumber());
+        }
+
         receiver = receiverRepository.save(receiver);
         Transaction transaction = transactionService.createTransaction(transactionDto, receiver);
+
+        sendingMailService.sendPendingTransactionMail(receiver.getUser());
+
         return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
     }
 }

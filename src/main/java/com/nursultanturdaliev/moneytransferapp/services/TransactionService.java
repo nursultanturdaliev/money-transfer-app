@@ -18,10 +18,14 @@ public class TransactionService {
 
     private CurrencyRepository currencyRepository;
 
+    private ReceiverRepository receiverRepository;
 
-    public TransactionService(TransactionRepository transactionRepository, CurrencyRepository currencyRepository) {
+    public TransactionService(TransactionRepository transactionRepository,
+                              CurrencyRepository currencyRepository,
+                              ReceiverRepository receiverRepository) {
         this.transactionRepository = transactionRepository;
         this.currencyRepository = currencyRepository;
+        this.receiverRepository = receiverRepository;
     }
 
     public Transaction createTransaction(TransactionDto transactionDto, Receiver receiver) throws NullValueException {
@@ -36,7 +40,6 @@ public class TransactionService {
         transaction.setAmount(transactionDto.getAmount());
         transaction.setTransactionId(transactionDto.getTransactionId());
         transaction.setPhoneNumber(transactionDto.getPhoneNumber());
-
         transaction.setReceiver(receiver);
 
         String currencyName = transactionDto.getCurrencyCode();

@@ -26,37 +26,38 @@ public class TransactionServiceTest {
         transactionRepository = Mockito.mock(TransactionRepository.class)
         ;
         currencyRepository = Mockito.mock(CurrencyRepository.class);
+
     }
 
-    @Test
-    public void testCreateTransaction() throws NullValueException {
-
-        TransactionService transactionService = new TransactionService(transactionRepository, currencyRepository);
-
-        TransactionDto transactionDto = new TransactionDto();
-
-        transactionDto.setAmount(1000L);
-        transactionDto.setTransactionId("unique-transaction-123");
-        transactionDto.setCurrencyCode("USD");
-
-        Transaction mockTransaction = new Transaction();
-        mockTransaction.setAmount(transactionDto.getAmount());
-        mockTransaction.setTransactionId(transactionDto.getTransactionId());
-
-        Currency currency = new Currency();
-        currency.setName(transactionDto.getCurrencyCode());
-
-        mockTransaction.setCurrency(currency);
-
-        when(transactionRepository.save(any(Transaction.class))).thenReturn(mockTransaction);
-        when(currencyRepository.findOneByName("USD")).thenReturn(currency);
-
-
-//        Transaction transaction = transactionService.createTransaction(transactionDto);
+//    @Test
+//    public void testCreateTransaction() throws NullValueException {
 //
-//        assertEquals(transaction.getAmount(), transactionDto.getAmount());
-//        assertEquals(transaction.getTransactionId(),transactionDto.getTransactionId());
+//        TransactionService transactionService = new TransactionService(transactionRepository, currencyRepository);
 //
-//        assertThat(transaction.getCurrency().getName()).isEqualTo(transactionDto.getCurrencyCode());
-    }
+//        TransactionDto transactionDto = new TransactionDto();
+//
+//        transactionDto.setAmount(1000L);
+//        transactionDto.setTransactionId("unique-transaction-123");
+//        transactionDto.setCurrencyCode("USD");
+//
+//        Transaction mockTransaction = new Transaction();
+//        mockTransaction.setAmount(transactionDto.getAmount());
+//        mockTransaction.setTransactionId(transactionDto.getTransactionId());
+//
+//        Currency currency = new Currency();
+//        currency.setName(transactionDto.getCurrencyCode());
+//
+//        mockTransaction.setCurrency(currency);
+//
+//        when(transactionRepository.save(any(Transaction.class))).thenReturn(mockTransaction);
+//        when(currencyRepository.findOneByName("USD")).thenReturn(currency);
+//
+//
+////        Transaction transaction = transactionService.createTransaction(transactionDto);
+////
+////        assertEquals(transaction.getAmount(), transactionDto.getAmount());
+////        assertEquals(transaction.getTransactionId(),transactionDto.getTransactionId());
+////
+////        assertThat(transaction.getCurrency().getName()).isEqualTo(transactionDto.getCurrencyCode());
+//    }
 }

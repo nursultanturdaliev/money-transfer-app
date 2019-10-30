@@ -30,6 +30,22 @@ public class SendingMailService {
         this.springTemplateEngine = springTemplateEngine;
     }
 
+    public void sendPendingTransactionMail(User user) {
+        String subject = "Your transaction is pending";
+        String body = "";
+        try {
+
+            Context context = new Context();
+            //context.setVariable("verificationURL", mailProperties.getVerificationapi() + verificationCode);
+            context.setVariable("user", user);
+            body = springTemplateEngine.process("transaction-pending.html", context);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+
+        sendMail(user.getEmail(), subject, body);
+    }
+
     public void sendVerificationMail(User user, String verificationCode) {
         String subject = "Please verify your email";
         String body = "";
