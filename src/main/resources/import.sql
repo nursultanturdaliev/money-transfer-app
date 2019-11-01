@@ -1,5 +1,5 @@
-INSERT INTO users (id, `created_at`, `email`, `first_name`, `last_name`, `password`, `updated_at`, `username`, is_active) VALUES (1, '2019-10-24 17:55:56', 'nursultan@peaksoft.us', 'Nursultan', 'Turdaliev', '$2a$10$ZuhGJnhIGZJ6dmVwPAJJiu1qQOARFImW8cdGzK9UngDedhG8d1zSm', '2019-10-24 17:55:56', 'nursultanturdaliev', true);
-insert into users (id, first_name, last_name, username, email, password) values (2, 'Nurali', 'Akimov', 'nurali.akimov', 'nurali.akimov@gmail.com','{bcrypt}$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG');
+INSERT INTO users (id, `created_at`, `email`, `first_name`, `last_name`, `password`, `updated_at`, is_active) VALUES (1, '2019-10-24 17:55:56', 'nursultan@peaksoft.us', 'Nursultan', 'Turdaliev', '$2a$10$ZuhGJnhIGZJ6dmVwPAJJiu1qQOARFImW8cdGzK9UngDedhG8d1zSm', '2019-10-24 17:55:56', true);
+insert into users (id, first_name, last_name, email, password) values (2, 'Nurali', 'Akimov', 'nurali.akimov@gmail.com','{bcrypt}$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG');
 insert into currencies (id, name) values (1,'USD');
 insert into currencies (id, name) values (2,'CAD');
 insert into currencies (id, name) values (3,'KGS');

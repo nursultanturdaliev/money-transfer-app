@@ -36,15 +36,10 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(user.getFirstName());
         user.setLastName(user.getLastName());
         user.setEmail(user.getEmail());
-        user.setUsername(user.getUsername());
         user.setRoles(new HashSet<>(roleRepository.findAll()));
         return userRepository.save(user);
     }
 
-    @Override
-    public User findOneByUsername(String username) {
-        return userRepository.findOneByUsername(username);
-    }
 
     @Override
     public User findUserByEmail(String userEmail) {

@@ -19,7 +19,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Iterable<User> findByFirstName(String firstName);
 
-    User findOneByUsername(String username);
 
     User findOneByEmail(String userEmail);
 }

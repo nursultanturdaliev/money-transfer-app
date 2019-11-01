@@ -24,14 +24,14 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         User user = (User) o;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
 
-        if (user.getUsername().length() < 6 || user.getUsername().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
+        if (user.getEmail().length() < 6 || user.getEmail().length() > 32) {
+            errors.rejectValue("email", "Size.userForm.username");
         }
 
-        if (userService.findOneByUsername(user.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+        if (userService.findUserByEmail(user.getEmail()) != null) {
+            errors.rejectValue("email", "Duplicate.userForm.username");
         }
 
 
