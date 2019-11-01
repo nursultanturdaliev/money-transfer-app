@@ -5,14 +5,17 @@ import com.nursultanturdaliev.moneytransferapp.dto.TransactionDto;
 import com.nursultanturdaliev.moneytransferapp.exception.NullValueException;
 import com.nursultanturdaliev.moneytransferapp.model.Receiver;
 import com.nursultanturdaliev.moneytransferapp.model.Transaction;
+import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.repository.ReceiverRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
 import com.nursultanturdaliev.moneytransferapp.services.SendingMailService;
 import com.nursultanturdaliev.moneytransferapp.services.TransactionService;
+import com.nursultanturdaliev.moneytransferapp.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +35,9 @@ public class TransactionController {
 
     @Autowired
     private SendingMailService sendingMailService;
+
+    @Autowired
+    private UserServiceImpl userService;
 
     @GetMapping("/")
     @IsSuperAdmin
@@ -58,6 +64,9 @@ public class TransactionController {
         Receiver receiver = receiverRepository.findByFirstNameAndLastName(
                 transactionDto.getFirstName(), transactionDto.getLastName());
 
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findOneByUsername(username);
+
         if(receiver != null){
             receiver.setPhoneNumber(transactionDto.getPhoneNumber());
         }else{
@@ -66,6 +75,8 @@ public class TransactionController {
             receiver.setLastName(transactionDto.getLastName());
             receiver.setPhoneNumber(transactionDto.getPhoneNumber());
         }
+
+        receiver.setUser(user);
 
         receiver = receiverRepository.save(receiver);
         Transaction transaction = transactionService.createTransaction(transactionDto, receiver);
