@@ -64,8 +64,8 @@ public class TransactionController {
         Receiver receiver = receiverRepository.findByFirstNameAndLastName(
                 transactionDto.getFirstName(), transactionDto.getLastName());
 
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.findOneByUsername(username);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findUserByEmail(email);
 
         if(receiver != null){
             receiver.setPhoneNumber(transactionDto.getPhoneNumber());
