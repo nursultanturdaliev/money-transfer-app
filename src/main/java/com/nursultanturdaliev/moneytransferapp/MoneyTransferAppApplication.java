@@ -1,8 +1,10 @@
 package com.nursultanturdaliev.moneytransferapp;
 
+import com.nursultanturdaliev.moneytransferapp.config.AppProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.builders.PathSelectors;
@@ -20,6 +22,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @EnableSwagger2
+@EnableConfigurationProperties(AppProperties.class)
 public class MoneyTransferAppApplication {
 
     public static void main(String[] args) {

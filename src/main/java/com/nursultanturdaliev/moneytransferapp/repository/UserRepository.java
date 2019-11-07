@@ -1,6 +1,3 @@
-
-
-
 package com.nursultanturdaliev.moneytransferapp.repository;
 
 import com.nursultanturdaliev.moneytransferapp.model.User;
@@ -19,6 +16,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Iterable<User> findByFirstName(String firstName);
 
-
     User findOneByEmail(String userEmail);
+
+    Boolean existsByEmail(String email);
 }
