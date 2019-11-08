@@ -7,6 +7,8 @@ import com.nursultanturdaliev.moneytransferapp.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends CrudRepository<User, Long> {
     Iterable<User> findTop1ByFirstName(String firstName);
 
@@ -21,4 +23,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
 
     User findOneByEmail(String userEmail);
+
+    Optional<User> findByEmail(String email);
+
+    Boolean existsByEmail(String email);
 }

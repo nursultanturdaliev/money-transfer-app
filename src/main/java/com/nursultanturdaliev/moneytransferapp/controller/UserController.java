@@ -3,10 +3,13 @@ package com.nursultanturdaliev.moneytransferapp.controller;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nursultanturdaliev.moneytransferapp.exception.ResourceNotFoundException;
 import com.nursultanturdaliev.moneytransferapp.model.Transaction;
 import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.repository.TransactionRepository;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
+import com.nursultanturdaliev.moneytransferapp.security.CurrentUser;
+import com.nursultanturdaliev.moneytransferapp.security.UserPrincipal;
 import com.nursultanturdaliev.moneytransferapp.services.UserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -110,5 +113,12 @@ public class UserController {
         }
 
         return ResponseEntity.ok(iterable);
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("hasRole('USER')")
+    public @ResponseBody User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+        return userRepository.findById(userPrincipal.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
 }

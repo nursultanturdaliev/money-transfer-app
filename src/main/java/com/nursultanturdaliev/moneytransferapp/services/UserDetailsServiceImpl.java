@@ -1,8 +1,10 @@
 package com.nursultanturdaliev.moneytransferapp.services;
 
+import com.nursultanturdaliev.moneytransferapp.exception.ResourceNotFoundException;
 import com.nursultanturdaliev.moneytransferapp.model.Role;
 import com.nursultanturdaliev.moneytransferapp.model.User;
 import com.nursultanturdaliev.moneytransferapp.repository.UserRepository;
+import com.nursultanturdaliev.moneytransferapp.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,5 +39,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantedAuthorities);
+    }
+
+    @Transactional
+    public UserDetails loadUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", id)
+        );
+
+        return UserPrincipal.create(user);
     }
 }
