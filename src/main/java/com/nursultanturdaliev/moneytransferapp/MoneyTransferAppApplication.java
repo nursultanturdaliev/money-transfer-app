@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
@@ -30,53 +31,53 @@ public class MoneyTransferAppApplication {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .globalResponseMessage(RequestMethod.GET,
-                newArrayList(new ResponseMessageBuilder()
-                                .code(200)
-                                .message("successful request")
-                                .build(),
-                        new ResponseMessageBuilder()
-                                .code(400)
-                                .message("bad request")
-                                .build(),
-                        new ResponseMessageBuilder()
-                                .code(404)
-                                .message("resource not found")
-                                .build(),
-                        new ResponseMessageBuilder()
-                                .code(500)
-                                .message("internal server error")
-                                .build()))
+                        newArrayList(new ResponseMessageBuilder()
+                                        .code(200)
+                                        .message("successful request")
+                                        .build(),
+                                new ResponseMessageBuilder()
+                                        .code(400)
+                                        .message("bad request")
+                                        .build(),
+                                new ResponseMessageBuilder()
+                                        .code(404)
+                                        .message("resource not found")
+                                        .build(),
+                                new ResponseMessageBuilder()
+                                        .code(500)
+                                        .message("internal server error")
+                                        .build()))
                 .globalResponseMessage(RequestMethod.POST,
-                newArrayList(new ResponseMessageBuilder()
-                                .code(201)
-                                .message("user created")
-                                .build(),
-                        new ResponseMessageBuilder()
-                                .code(400)
-                                .message("bad request")
-                                .build(),
-                        new ResponseMessageBuilder()
-                                .code(405)
-                                .message("method not allowed")
-                                .build(),
-                        new ResponseMessageBuilder()
-                                .code(500)
-                                .message("internal server error")
-                                .build()))
+                        newArrayList(new ResponseMessageBuilder()
+                                        .code(201)
+                                        .message("user created")
+                                        .build(),
+                                new ResponseMessageBuilder()
+                                        .code(400)
+                                        .message("bad request")
+                                        .build(),
+                                new ResponseMessageBuilder()
+                                        .code(405)
+                                        .message("method not allowed")
+                                        .build(),
+                                new ResponseMessageBuilder()
+                                        .code(500)
+                                        .message("internal server error")
+                                        .build()))
                 .globalResponseMessage(RequestMethod.DELETE,
-                newArrayList(
-                        new ResponseMessageBuilder()
-                                .code(204)
-                                .message("no content")
-                                .build(),
-                        new ResponseMessageBuilder()
-                                .code(404)
-                                .message("resource not found")
-                                .build(),
-                        new ResponseMessageBuilder()
-                                .code(500)
-                                .message("internal server error")
-                                .build()))
+                        newArrayList(
+                                new ResponseMessageBuilder()
+                                        .code(204)
+                                        .message("no content")
+                                        .build(),
+                                new ResponseMessageBuilder()
+                                        .code(404)
+                                        .message("resource not found")
+                                        .build(),
+                                new ResponseMessageBuilder()
+                                        .code(500)
+                                        .message("internal server error")
+                                        .build()))
                 .globalResponseMessage(RequestMethod.PUT,
                         newArrayList(
                                 new ResponseMessageBuilder()
@@ -106,5 +107,10 @@ public class MoneyTransferAppApplication {
                 "Terms of service",
                 new Contact("Nursultan Turdaliev", "www.kapusta.com", "contact@kapusta.com"),
                 "GPL 3.0", "https://www.gnu.org/licenses/gpl-3.0.en.html", Collections.emptyList());
+    }
+
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
     }
 }
