@@ -28,6 +28,13 @@ spring:
             scope:
               - email
               - public_profile
+          github:
+            clientId: 30549c9eb19876eae29f
+            clientSecret: e681bf0fc56a612870a83a463ae5a2f643e74a60
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - user:email
+              - read:user
         provider:
           facebook:
             authorizationUri: https://www.facebook.com/v5.0/dialog/oauth
