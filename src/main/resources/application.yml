@@ -14,6 +14,13 @@ spring:
     oauth2:
       client:
         registration:
+          google:
+            clientId: 462140004694-k9s9l70t999ecs9tmeiu2iljak76aecb.apps.googleusercontent.com
+            clientSecret: aVj4KPVg5bStAGhW5YG1OLov
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
           facebook:
             clientId: 2395114657235495
             clientSecret: d1d915ed8d18972081cb192be8682bce
